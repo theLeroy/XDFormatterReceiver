@@ -11,11 +11,11 @@ export const convertUnit = (
     stripLeadingZeros = false
 ) => {
     let converted = value;
-    if (value.endsWith('rem')) {
-        converted = `${roundToNearestRem(remArray, value.split('rem')[0])}rem`;
-    } else if (value.endsWith('px')) {
-        converted = convertPxToRem(remArray, value, conversionFactor);
-    }
+    // if (value.endsWith('rem')) {
+    converted = `${roundToNearestRem(remArray, value)}rem`;
+    // } else if (value.endsWith('px')) {
+    //   converted = convertPxToRem(remArray, value, conversionFactor);
+    // }
     if (stripLeadingZeros) {
         converted = converted.replace(/^[0.]+/, '.');
     }

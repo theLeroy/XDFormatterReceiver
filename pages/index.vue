@@ -21,7 +21,8 @@ typo</textarea
 </template>
 
 <script>
-import {convertFontSize} from "~/modules/convert/convertFontSize.js";
+import { convertFontSize } from "~/modules/convert/convertFontSize.js";
+import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
 export default {
   data() {
     return {
@@ -257,26 +258,25 @@ export default {
       return ColorObject;
     },
     genTypo(fonts) {
-      
       // return fonts;
-      return this.genCss(fonts[0].style);;
+      return this.genCss(fonts[0].style);
     },
     genCss(style, prefix) {
       let tailwindClasses = [];
       let SassClasses = [];
-      console.log(style);
       //Loop through all the styles properties from xd Plugin
-        for (var property in style) {
+      for (var property in style) {
         let ClassName = this.classBuilder(property, style[property]);
-      //Test if conversion was succsessfull
-      if (ClassName) {
-        tailwindClasses.push(ClassName)
-      } else {
-        //Not Tailwind compatible
-        console.log("Not Tailwind compatible");
-      }
+        //Test if conversion was succsessfull
+        if (ClassName) {
+          tailwindClasses.push(ClassName);
+        } else {
+          //Not Tailwind compatible
+          console.log("Not Tailwind compatible; ", property, style[property]);
         }
-        return tailwindClasses;
+      }
+      console.log("Tailwind Classes: ", tailwindClasses);
+      return tailwindClasses;
     },
     classBuilder(key, value, prefix = "") {
       let returnClass = "";
@@ -285,32 +285,13 @@ export default {
           returnClass = `${prefix}font-${this.kebalize(value)}`;
           break;
         case "fontStyle":
-          switch (value) {
-            case "Bold":
-              returnClass = `${prefix}font-bold`;
-              break;
-            case "Book, Regular":
-              returnClass = `${prefix}font-normal`;
-              break;
-            case "Italic":
-              returnClass = `${prefix}font-italic`;
-              break;
-            case "Medium":
-              returnClass = `${prefix}font-medium`;
-              break;
-            case "SemiBold":
-              returnClass = `${prefix}font-semibold`;
-              break;
-            case "Thin":
-              returnClass = `${prefix}font-thin`;
-              break;
-            default:
-              returnClass = `${prefix}font-normal`;
-          }
+          returnClass = convertFontStyle(value, prefix);
           break;
         case "fontSize":
-          console.log(value);
-          let fsize = convertFontSize(value, this.generatroConfig.settings.remConversion);
+          let fsize = convertFontSize(
+            value,
+            this.generatroConfig.settings.remConversion
+          );
           returnClass = `${prefix}font-size-${fsize}`;
           break;
         case "fill":
@@ -327,7 +308,8 @@ export default {
           break;
         case "textScript":
           break;
-        default: false;
+        default:
+          false;
       }
       return returnClass;
     },
