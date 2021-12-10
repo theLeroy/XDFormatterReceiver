@@ -1,0 +1,111 @@
+// GENERAL TYPOGRAPHY
+
+
+
+@layer components {
+	@variants responsive {
+		// div[class^='typo-'] {
+		// 	@apply font-circular;
+		// }
+		.typo-100-caps {
+			//Default Styles 
+			@apply capitalize font-bold text-primary orange:text-orange;
+            //Desktop (lg:)
+			@apply lg:leading-5 lg:text-base tracking-[150] ;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-100 {
+			//Default Styles 
+			@apply text-black tracking-normal;
+            //Desktop (lg:)
+			@apply font-[350] lg:leading-6  lg:text-base;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-200 {
+			//Default Styles 
+			@apply text-black tracking-normal;
+            //Desktop (lg:)
+			@apply font-[350] lg:leading-[1.625rem] lg:text-lg;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-300 {
+			//Default Styles 
+			@apply tracking-normal text-black;
+            //Desktop (lg:)
+			@apply font-[350] lg:leading-[1.875rem] lg:text-xl;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-400 {
+			//Default Styles 
+			@apply tracking-normal text-black;
+            //Desktop (lg:)
+			@apply font-[350] lg:leading-[1.875rem] lg:text-[1.375rem];
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-500 {
+			//Default Styles 
+			@apply text-primary tracking-normal orange:text-orange font-bold;
+            //Desktop (lg:)
+			@apply lg:leading-[1.875rem] lg:text-2xl ;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-600 {
+			//Default Styles 
+			@apply tracking-normal orange:text-orange text-primary font-bold;
+            //Desktop (lg:)
+			@apply lg:leading-[2.625rem] lg:text-[2.188rem] ;
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-700 {
+			//Default Styles 
+			@apply tracking-normal orange:text-orange text-primary font-[350];
+            //Desktop (lg:)
+			@apply lg:leading-[2.625rem] lg:text-[2.188rem];
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-800 {
+			//Default Styles 
+			@apply font-extrabold text-secondary orange:text-orange;
+            //Desktop (lg:)
+			@apply lg:leading-[2.813rem] lg:text-[2.188rem] tracking-[1.25rem];
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+		.typo-900 {
+			//Default Styles 
+			@apply font-extrabold text-secondary orange:text-orange;
+            //Desktop (lg:)
+			@apply lg:leading-[2.813rem] lg:text-[3.375rem] tracking-[1.25rem];
+            // //Tablet (sm:)
+			// @apply ;
+            // //Mobile (> sm:)
+			// @apply ;
+		}
+	}
+}

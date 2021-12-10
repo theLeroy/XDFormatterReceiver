@@ -21,12 +21,16 @@ typo</textarea
 </template>
 
 <script>
+import {convertFontSize} from "~/modules/convert/convertFontSize.js";
 export default {
   data() {
     return {
       generatroConfig: {
         genColors: true,
         genTypo: true,
+        settings: {
+          remConversion: 16,
+        },
         tailwindTree: {
           theme: {
             extend: {
@@ -222,8 +226,8 @@ export default {
       resultTailwind = this.genColors(colrs);
       //css
       resultSass = this.genTypo(fonts);
-      console.log("Tailwind: ", resultTailwind);
-      console.log("Sass: ", resultSass);
+      console.log("Tailwind Config: ", resultTailwind);
+      console.log("Sass File: ", resultSass);
     },
     camelize(str) {
       return str
@@ -234,21 +238,18 @@ export default {
     },
     kebalize(str) {
       return str
-        .split("")
-        .map((letter, idx) => {
-          return letter.toUpperCase() === letter
-            ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
-            : letter;
-        })
-        .join("");
+        .match(
+          /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
+        )
+        .map((x) => x.toLowerCase())
+        .join("-");
     },
     genColors(colrs) {
       let ColorObject = [];
       if (this.generatroConfig.genColors) {
         colrs.forEach((color) => {
-          console.log();
           let colorName = this.camelize(color.name);
-          let colorvalue = '#' + color.color.value.toString(16);
+          let colorvalue = "#" + color.color.value.toString(16);
           let obj = { [colorName]: colorvalue };
           ColorObject.push(obj);
         });
@@ -256,16 +257,80 @@ export default {
       return ColorObject;
     },
     genTypo(fonts) {
-      this.genCss(fonts[0].style)
+      
       // return fonts;
-      return 'asd'
+      return this.genCss(fonts[0].style);;
     },
     genCss(style, prefix) {
       let tailwindClasses = [];
       let SassClasses = [];
-      console.log(this.kebalize(style.fontFamily))
+      console.log(style);
+      //Loop through all the styles properties from xd Plugin
+        for (var property in style) {
+        let ClassName = this.classBuilder(property, style[property]);
+      //Test if conversion was succsessfull
+      if (ClassName) {
+        tailwindClasses.push(ClassName)
+      } else {
+        //Not Tailwind compatible
+        console.log("Not Tailwind compatible");
+      }
+        }
+        return tailwindClasses;
     },
-    classBuilder(name {prefix, })
+    classBuilder(key, value, prefix = "") {
+      let returnClass = "";
+      switch (key) {
+        case "fontFamily":
+          returnClass = `${prefix}font-${this.kebalize(value)}`;
+          break;
+        case "fontStyle":
+          switch (value) {
+            case "Bold":
+              returnClass = `${prefix}font-bold`;
+              break;
+            case "Book, Regular":
+              returnClass = `${prefix}font-normal`;
+              break;
+            case "Italic":
+              returnClass = `${prefix}font-italic`;
+              break;
+            case "Medium":
+              returnClass = `${prefix}font-medium`;
+              break;
+            case "SemiBold":
+              returnClass = `${prefix}font-semibold`;
+              break;
+            case "Thin":
+              returnClass = `${prefix}font-thin`;
+              break;
+            default:
+              returnClass = `${prefix}font-normal`;
+          }
+          break;
+        case "fontSize":
+          console.log(value);
+          let fsize = convertFontSize(value, this.generatroConfig.settings.remConversion);
+          returnClass = `${prefix}font-size-${fsize}`;
+          break;
+        case "fill":
+          break;
+        case "charSpacing":
+          break;
+        case "lineSpacing":
+          break;
+        case "underline":
+          break;
+        case "strikethrough":
+          break;
+        case "textTransform":
+          break;
+        case "textScript":
+          break;
+        default: false;
+      }
+      return returnClass;
+    },
   },
 };
 </script>
