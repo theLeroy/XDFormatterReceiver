@@ -23,7 +23,7 @@ typo</textarea
 <script>
 import { convertFontSize } from "~/modules/convert/convertFontSize.js";
 import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
-import { convertCss } from "~/modules/convert/parser/parser.js";
+import { convertCharSpacing } from "~/modules/convert/convertCharSpacing.js";
 export default {
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
             fontStyle: "Book",
             fontSize: 5678,
             fill: ["Object"],
-            charSpacing: 0,
+            charSpacing: -40,
             lineSpacing: 30,
             underline: false,
             strikethrough: false,
@@ -297,10 +297,14 @@ export default {
             value,
             this.generatroConfig.settings.remConversion
           );
-          return fsize[0] ? fsize[1] : `${prefix}text-[${fsize[1]}]`;
+          return fsize[0] ? `${prefix}${fsize[1]}` : `${prefix}text-[${fsize[1]}]`;
         case "fill":
           break;
         case "charSpacing":
+          let Lspacing = convertCharSpacing( value,
+            this.generatroConfig.settings.remConversion
+            );
+             return Lspacing[0] ? `${prefix}${Lspacing[1]}` : `${prefix}tracking-[${Lspacing[1]}]em`;
           break;
         case "lineSpacing":
           break;

@@ -42,7 +42,7 @@ const convertPxToRem = (remArray, value, conversionFactor = 16) => {
     } else {
         // return value if not in round range of remArray
         value = value / conversionFactor
-        return `${Math.round(value * 10) / 10}rem`;
+        return `${Math.round(value * 100) / 100}rem`;
     }
 };
 
