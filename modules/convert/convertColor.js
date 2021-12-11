@@ -1,4 +1,3 @@
-// import NearestColor from 'nearest-color';
 
 export const convertColor = (color, settings, TailwindColors = []) => {
     color = switchToHex(color)

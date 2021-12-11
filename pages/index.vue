@@ -6,7 +6,7 @@
       id="color"
       class="w-1/2 h-96 outline m-12"
     >
-color</textarea
+color </textarea
     >
     <textarea
       v-model="typo"
@@ -14,9 +14,25 @@ color</textarea
       id="typo"
       class="w-1/2 h-96 outline m-12"
     >
-typo</textarea
+typo </textarea
     >
     <button @click="gen(typo, color)">Run</button>
+    <div>   <textarea
+      v-model="colorOutput"
+      type="textarea"
+      id="colorOutput"
+      class="w-1/2 h-96 outline m-12"
+    >
+colorOutput </textarea
+    >
+    <textarea
+      v-model="typoOutput"
+      type="textarea"
+      id="typoOutput"
+      class="w-1/2 h-96 outline m-12"
+    >
+typoOutput </textarea
+    ></div>
   </div>
 </template>
 
@@ -44,6 +60,8 @@ export default {
           },
         },
       },
+      typoOutput: "",
+      colorOutput: "",
       color: [
         { name: "Primary color", color: { value: 4280181677 } },
         { name: "Tertiary color", color: { value: 4287475925 } },
@@ -59,7 +77,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 5678,
-            fill: { value: 4279382357 },
+            fill: { value: 4280181677 },
             charSpacing: -40,
             lineSpacing: 0,
             underline: false,
@@ -74,7 +92,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Bold",
             fontSize: 16,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 150,
             lineSpacing: 0,
             underline: false,
@@ -88,7 +106,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 42,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 10,
             lineSpacing: 52,
             underline: false,
@@ -103,7 +121,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Bold",
             fontSize: 42,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 20,
             lineSpacing: 45,
             underline: false,
@@ -118,7 +136,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Bold",
             fontSize: 24,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 30,
             underline: false,
@@ -133,7 +151,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 18,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 26,
             underline: false,
@@ -147,7 +165,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 20,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 30,
             underline: false,
@@ -161,7 +179,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Bold",
             fontSize: 35,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 42,
             underline: false,
@@ -176,7 +194,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Bold",
             fontSize: 54,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 20,
             lineSpacing: 45,
             underline: false,
@@ -191,7 +209,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 16,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 24,
             underline: false,
@@ -205,7 +223,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 14,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: 0,
             lineSpacing: 20,
             underline: false,
@@ -230,8 +248,11 @@ export default {
 
       //taiwlind
       resultTailwindConfig.colors = this.genColors(colrs);
+        this.colorOutput = resultTailwindConfig
       //css
       resultSass = this.genTypo(fonts, resultTailwindConfig);
+      this.typoOutput = resultSass;
+
       console.log("Tailwind Config: ", resultTailwindConfig);
       console.log("Sass File: ", resultSass);
     },
@@ -264,7 +285,11 @@ export default {
     },
     genTypo(fonts, TailwindConfig) {
       // return fonts;
-      return this.genCss(fonts[0].style, TailwindConfig);
+      let TypoObject = [];
+      for (let index = 0; index < fonts.length; index++) {
+        TypoObject.push( this.genCss(fonts[index].style, TailwindConfig));
+      }
+      return TypoObject
     },
     genCss(style, TailwindConfig = [], prefix = "") {
       let tailwindClasses = [];
@@ -279,7 +304,6 @@ export default {
           console.log("Not Tailwind compatible; ", property, style[property]);
         }
       }
-      console.log("Tailwind Classes: ", tailwindClasses);
       return tailwindClasses;
     },
     classBuilder(key, value, TailwindColors = [], prefix = "") {
@@ -295,17 +319,9 @@ export default {
             value,
             this.generatroConfig.settings.remConversion
           );
-          return fSize[0] ? `${prefix}${fSize[1]}` : `${prefix}text-[${fSize[1]}]`;
-// Handle Color Conversion
+          return fSize[0] ? `${prefix}${fSize[1]}` : `${prefix}leading-[${fSize[1]}]`;
         case "fill":
-          // Convert Color Number to hex
-          let color = '#' + value.value.toString(16)
-          let tColor = convertColor(
-            color,
-            this.generatroConfig.settings,
-            TailwindColors
-          );
-          return tColor[0] ? `${prefix}${tColor[1]}` : `${prefix}leading-[${tColor[1]}]`;
+          return this.colorClass(value, TailwindColors)
           break;
         case "charSpacing":
           let lSpacing = convertCharSpacing( value,
@@ -333,6 +349,20 @@ export default {
           return false;
       }
     },
+    colorClass(value, TailwindColors){
+ // Convert Color Number to hex
+      try {
+          let color = '#' + value.value.toString(16)
+          let tColor = convertColor(
+            color,
+            this.generatroConfig.settings,
+            TailwindColors
+          );
+          return tColor[0] ? `${prefix}${tColor[1]}` : `${prefix}text-[${tColor[1]}]`;
+      } catch (error) {
+        console.error('error converting color, Value Provided is curupt', error);
+      }
+    }
   },
 };
 </script>
