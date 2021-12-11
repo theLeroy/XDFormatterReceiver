@@ -24,6 +24,7 @@ typo</textarea
 import { convertFontSize } from "~/modules/convert/convertFontSize.js";
 import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
 import { convertCharSpacing } from "~/modules/convert/convertCharSpacing.js";
+import { convertLineHeight } from "~/modules/convert/convertLineHeight.js";
 export default {
   data() {
     return {
@@ -58,9 +59,9 @@ export default {
             fontSize: 5678,
             fill: ["Object"],
             charSpacing: -40,
-            lineSpacing: 30,
+            lineSpacing: 0,
             underline: false,
-            strikethrough: false,
+            strikethrough: true,
             textTransform: "none",
             textScript: "none",
           },
@@ -293,24 +294,30 @@ export default {
         case "fontStyle":
           return convertFontStyle(value, prefix);
         case "fontSize":
-          let fsize = convertFontSize(
+          let fSize = convertFontSize(
             value,
             this.generatroConfig.settings.remConversion
           );
-          return fsize[0] ? `${prefix}${fsize[1]}` : `${prefix}text-[${fsize[1]}]`;
+          return fSize[0] ? `${prefix}${fSize[1]}` : `${prefix}text-[${fSize[1]}]`;
         case "fill":
           break;
         case "charSpacing":
-          let Lspacing = convertCharSpacing( value,
+          let lSpacing = convertCharSpacing( value,
             this.generatroConfig.settings.remConversion
             );
-             return Lspacing[0] ? `${prefix}${Lspacing[1]}` : `${prefix}tracking-[${Lspacing[1]}]em`;
+             return lSpacing[0] ? `${prefix}${lSpacing[1]}` : `${prefix}tracking-[${lSpacing[1]}rem]`;
           break;
         case "lineSpacing":
+            let lHeight = convertLineHeight( value,
+            this.generatroConfig.settings.remConversion
+            );
+            return lHeight[0] ? `${prefix}${lHeight[1]}` : `${prefix}leading-[${lHeight[1]}]`;
           break;
         case "underline":
+          return value ? `${prefix}underline` : `${prefix}no-underline`; 
           break;
         case "strikethrough":
+           return value ? `${prefix}line-through` : ""; 
           break;
         case "textTransform":
           break;
