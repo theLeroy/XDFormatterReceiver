@@ -16,7 +16,8 @@ export const convertUnit = (
     // } else if (value.endsWith('px')) {
     converted = convertPxToRem(remArray, value, conversionFactor);
     // }
-    if (stripLeadingZeros) {
+    console.warn(converted);
+    if (stripLeadingZeros && isNaN(converted)) {
         converted = converted.replace(/^[0.]+/, '.');
     }
     return converted;
@@ -38,8 +39,11 @@ const convertPxToRem = (remArray, value, conversionFactor = 16) => {
         } else {
             return `${closest}rem`;
         }
+    } else {
+        // return value if not in round range of remArray
+        value = value / conversionFactor
+        return `${Math.round(value * 10) / 10}rem`;
     }
-    return value;
 };
 
 const roundToNearestRem = (remArray, num) => {

@@ -23,7 +23,7 @@ typo</textarea
 <script>
 import { convertFontSize } from "~/modules/convert/convertFontSize.js";
 import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
-// import { convertCss } from "~/modules/convert/convert/parser/parser.js";
+import { convertCss } from "~/modules/convert/parser/parser.js";
 export default {
   data() {
     return {
@@ -55,7 +55,7 @@ export default {
           style: {
             fontFamily: "Circular Std",
             fontStyle: "Book",
-            fontSize: 16,
+            fontSize: 5678,
             fill: ["Object"],
             charSpacing: 0,
             lineSpacing: 30,
@@ -281,6 +281,12 @@ export default {
       return tailwindClasses;
     },
     classBuilder(key, value, prefix = "") {
+      // let tailWindStyles = [];
+      // let errors = [];
+      // key = this.kebalize(key)
+      // console.warn("key: ", key, "value: ", value);
+      // let output = convertCss(key, value, tailWindStyles, errors);
+      // console.warn("output: ", output);
       switch (key) {
         case "fontFamily":
           return `${prefix}font-${this.kebalize(value)}`;
@@ -291,7 +297,7 @@ export default {
             value,
             this.generatroConfig.settings.remConversion
           );
-          return `${prefix}font-size-${fsize}`;
+          return fsize[0] ? fsize[1] : `${prefix}text-[${fsize[1]}]`;
         case "fill":
           break;
         case "charSpacing":

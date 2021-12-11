@@ -5,12 +5,17 @@ import { convertFontWeight, convertLineHeight, convertFontSize } from './text';
 import { convertBorderRadius } from './border';
 import { convertDimensions } from './dimensions';
 
+const settings = {
+    remConversion: true,
+};
+
+
+
 export const convertCss = (
     property,
     value,
     tailWindStyles,
-    errors,
-    settings
+    errors
 ) => {
     let processedProperty = processProperty(property, value);
     let processedValue = processValue(
