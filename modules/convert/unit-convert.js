@@ -16,7 +16,7 @@ export const convertUnit = (
     // } else if (value.endsWith('px')) {
     converted = convertPxToRem(remArray, value, conversionFactor);
     // }
-    console.warn(converted);
+    // console.warn(converted);
     if (stripLeadingZeros && isNaN(converted)) {
         converted = converted.replace(/^[0.]+/, '.');
     }

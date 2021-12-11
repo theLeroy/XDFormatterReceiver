@@ -19,7 +19,6 @@ export const convertLineHeight = (LineHeight, settings) => {
     }
 };
 
-//Rounded Because of rounding in convertUnit
 var tailwindcssLineHeight = {
     '0': '.leading-normal',
     '0rem': '.leading-normal',

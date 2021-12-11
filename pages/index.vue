@@ -25,6 +25,7 @@ import { convertFontSize } from "~/modules/convert/convertFontSize.js";
 import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
 import { convertCharSpacing } from "~/modules/convert/convertCharSpacing.js";
 import { convertLineHeight } from "~/modules/convert/convertLineHeight.js";
+import { convertColor } from "~/modules/convert/convertColor.js";
 export default {
   data() {
     return {
@@ -33,6 +34,7 @@ export default {
         genTypo: true,
         settings: {
           remConversion: 16,
+          autoConvertColor: true,
         },
         tailwindTree: {
           theme: {
@@ -57,7 +59,7 @@ export default {
             fontFamily: "Circular Std",
             fontStyle: "Book",
             fontSize: 5678,
-            fill: ["Object"],
+            fill: { value: 4279382357 },
             charSpacing: -40,
             lineSpacing: 0,
             underline: false,
@@ -223,13 +225,14 @@ export default {
       const fonts = typo;
       const colrs = color;
       // const fonts = typo;
-      var resultTailwind, resultSass;
+      var resultTailwindConfig = {}
+      var resultSass = {}
 
       //taiwlind
-      resultTailwind = this.genColors(colrs);
+      resultTailwindConfig.colors = this.genColors(colrs);
       //css
-      resultSass = this.genTypo(fonts);
-      console.log("Tailwind Config: ", resultTailwind);
+      resultSass = this.genTypo(fonts, resultTailwindConfig);
+      console.log("Tailwind Config: ", resultTailwindConfig);
       console.log("Sass File: ", resultSass);
     },
     camelize(str) {
@@ -259,17 +262,15 @@ export default {
       }
       return ColorObject;
     },
-    genTypo(fonts) {
+    genTypo(fonts, TailwindConfig) {
       // return fonts;
-      return this.genCss(fonts[0].style);
+      return this.genCss(fonts[0].style, TailwindConfig);
     },
-    genCss(style, prefix) {
+    genCss(style, TailwindConfig = [], prefix = "") {
       let tailwindClasses = [];
-      let SassClasses = [];
       //Loop through all the styles properties from xd Plugin
       for (var property in style) {
-        console.log("Property: ", property, style[property]);
-        let ClassName = this.classBuilder(property, style[property]);
+        let ClassName = this.classBuilder(property, style[property], TailwindConfig.colors, prefix);
         //Test if conversion was succsessfull
         if (ClassName) {
           tailwindClasses.push(ClassName);
@@ -281,13 +282,9 @@ export default {
       console.log("Tailwind Classes: ", tailwindClasses);
       return tailwindClasses;
     },
-    classBuilder(key, value, prefix = "") {
-      // let tailWindStyles = [];
-      // let errors = [];
-      // key = this.kebalize(key)
-      // console.warn("key: ", key, "value: ", value);
-      // let output = convertCss(key, value, tailWindStyles, errors);
-      // console.warn("output: ", output);
+    classBuilder(key, value, TailwindColors = [], prefix = "") {
+
+      //Case devider
       switch (key) {
         case "fontFamily":
           return `${prefix}font-${this.kebalize(value)}`;
@@ -299,7 +296,16 @@ export default {
             this.generatroConfig.settings.remConversion
           );
           return fSize[0] ? `${prefix}${fSize[1]}` : `${prefix}text-[${fSize[1]}]`;
+// Handle Color Conversion
         case "fill":
+          // Convert Color Number to hex
+          let color = '#' + value.value.toString(16)
+          let tColor = convertColor(
+            color,
+            this.generatroConfig.settings,
+            TailwindColors
+          );
+          return tColor[0] ? `${prefix}${tColor[1]}` : `${prefix}leading-[${tColor[1]}]`;
           break;
         case "charSpacing":
           let lSpacing = convertCharSpacing( value,
