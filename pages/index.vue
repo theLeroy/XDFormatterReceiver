@@ -23,6 +23,7 @@ typo</textarea
 <script>
 import { convertFontSize } from "~/modules/convert/convertFontSize.js";
 import { convertFontStyle } from "~/modules/convert/convertFontStyle.js";
+// import { convertCss } from "~/modules/convert/convert/parser/parser.js";
 export default {
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
           style: {
             fontFamily: "Circular Std",
             fontStyle: "Book",
-            fontSize: 22,
+            fontSize: 16,
             fill: ["Object"],
             charSpacing: 0,
             lineSpacing: 30,
@@ -266,6 +267,7 @@ export default {
       let SassClasses = [];
       //Loop through all the styles properties from xd Plugin
       for (var property in style) {
+        console.log("Property: ", property, style[property]);
         let ClassName = this.classBuilder(property, style[property]);
         //Test if conversion was succsessfull
         if (ClassName) {
@@ -279,21 +281,17 @@ export default {
       return tailwindClasses;
     },
     classBuilder(key, value, prefix = "") {
-      let returnClass = "";
       switch (key) {
         case "fontFamily":
-          returnClass = `${prefix}font-${this.kebalize(value)}`;
-          break;
+          return `${prefix}font-${this.kebalize(value)}`;
         case "fontStyle":
-          returnClass = convertFontStyle(value, prefix);
-          break;
+          return convertFontStyle(value, prefix);
         case "fontSize":
           let fsize = convertFontSize(
             value,
             this.generatroConfig.settings.remConversion
           );
-          returnClass = `${prefix}font-size-${fsize}`;
-          break;
+          return `${prefix}font-size-${fsize}`;
         case "fill":
           break;
         case "charSpacing":
@@ -309,9 +307,8 @@ export default {
         case "textScript":
           break;
         default:
-          false;
+          return false;
       }
-      return returnClass;
     },
   },
 };

@@ -1,9 +1,4 @@
-// https://github.com/stevezease/tailwind-converter/blob/master/src/scripts/parser/unit-convert.js
 // Attempts to round the units if possible to fit tailwind otherwise gives back the original value;
-
-
-
-
 export const convertUnit = (
     remArray,
     value,
@@ -11,11 +6,11 @@ export const convertUnit = (
     stripLeadingZeros = false
 ) => {
     let converted = value;
-    // if (value.endsWith('rem')) {
-    // converted = `${roundToNearestRem(remArray, value)}rem`;
-    // } else if (value.endsWith('px')) {
-    converted = convertPxToRem(remArray, value, conversionFactor);
-    // }
+    if (value.endsWith('rem')) {
+        converted = `${roundToNearestRem(remArray, value.split('rem')[0])}rem`;
+    } else if (value.endsWith('px')) {
+        converted = convertPxToRem(remArray, value, conversionFactor);
+    }
     if (stripLeadingZeros) {
         converted = converted.replace(/^[0.]+/, '.');
     }
@@ -23,7 +18,7 @@ export const convertUnit = (
 };
 
 const convertPxToRem = (remArray, value, conversionFactor = 16) => {
-    const numericVal = parseInt(value);
+    const numericVal = parseInt(value.split('px')[0]);
     const min = Math.min(...remArray);
     const max = Math.max(...remArray);
     if (

@@ -1,33 +1,24 @@
 
 
 export const convertFontStyle = (value, prefix) => {
-    let retrn = '';
     switch (value) {
         case "Bold":
-            retrn = `${prefix}font-bold`;
-            break;
+            return `${prefix}font-bold`;
         case "Book":
-            retrn = `${prefix}font-normal`;
-            break;
+            return `${prefix}font-normal`;
         case "Regular":
-            retrn = `${prefix}font-normal`;
-            break;
+            return `${prefix}font-normal`;
         case "Italic":
-            retrn = `${prefix}font-italic`;
-            break;
+            return `${prefix}font-italic`;
         case "Medium":
-            retrn = `${prefix}font-medium`;
-            break;
+            return `${prefix}font-medium`;
         case "SemiBold":
-            retrn = `${prefix}font-semibold`;
-            break;
+            return `${prefix}font-semibold`;
         case "Thin":
-            retrn = `${prefix}font-thin`;
-            break;
+            return `${prefix}font-thin`;
         default:
-            retrn = `${prefix}font-normal`;
+            return `${prefix}font-normal`;
     }
 
-    return retrn;
 };
 
