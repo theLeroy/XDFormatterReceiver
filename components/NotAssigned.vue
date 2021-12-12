@@ -1,6 +1,5 @@
 <template>
 <div class="  shadow-md h-full">
-<div class="text-white">{{name}}</div>
   <draggable group="fonts" :list="group" class="">
     <FormatCard
       class="list-group-item"

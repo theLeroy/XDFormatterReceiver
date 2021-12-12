@@ -4,9 +4,9 @@
       <div>prefix: {{ font.prefix }}</div>
       <div>
         classes:
-        <div v-for="(item, index) in font.classes" :key="index">
-          <div>{{ item }}</div>
-        </div>
+        <span v-for="(item, index) in font.classes" :key="index">
+          {{ item }}
+        </span>
       </div>
     </div>
   </div>

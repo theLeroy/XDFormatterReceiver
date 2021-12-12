@@ -38,36 +38,7 @@ export default {
       group4Name: ".typo-100",
       group5Name: ".typo-100",
       group6Name: ".typo-100",
-      NotAssigned: [
-        {
-          prefix: null,
-          classes: ["12", "23"],
-        },
-        {
-          prefix: null,
-          classes: ["asd", "asd"],
-        },
-        {
-          prefix: null,
-          classes: ["axxxsd", "x"],
-        },
-        {
-          prefix: null,
-          classes: ["axxxsd", "x"],
-        },
-        {
-          prefix: null,
-          classes: ["axxxsd", "x"],
-        },
-        {
-          prefix: null,
-          classes: ["axxxsd", "x"],
-        },
-        {
-          prefix: null,
-          classes: ["axxxsd", "x"],
-        },
-      ],
+      NotAssigned: [],
       group1: [],
       group2: [],
       group3: [],
@@ -75,6 +46,23 @@ export default {
       group5: [],
       group6: [],
     };
+  },
+  mounted() {
+    let font = {
+          prefix: null,
+          classes: []
+        };
+    let typoOutput  = this.$store.getters['typoOutput/getTypo']
+
+      for (let index = 0; index < typoOutput.length; index++) {
+         this.NotAssigned.push({
+          prefix: null,
+          classes: typoOutput[index]
+        });
+      }
+
+    // let color = this.$store.getters['typoOutput/getColors']
+
   },
   methods: {
     //add new tasks method
