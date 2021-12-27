@@ -12,6 +12,7 @@
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
     "nuxt-socket-io": "^2.0.0",
+    "vue-router": "^3.5.3",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
