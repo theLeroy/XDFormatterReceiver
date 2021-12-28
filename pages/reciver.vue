@@ -47,9 +47,6 @@ export default {
        this.color.push(b)
      }
 
-
-    //Load in typo Data
-    // let index = 0
   
   
 //Loop all fonts
@@ -57,6 +54,10 @@ export default {
     var key = Object.keys(this.$route.query)[i];
     let e = this.$route.query[key];
      let element = e.split(',')
+
+
+    
+    
 
     //Loop all font Properties
        let font = {style: {fontFamily: "",fontStyle: "",fontSize: 0,fill: { value: 0 },charSpacing: 0,lineSpacing: 0,underline: 0,strikethrough: 0,textTransform: "",textScript: "",},name: ""};
@@ -66,10 +67,10 @@ export default {
        font.style.fill.value = element[3];
        font.style.charSpacing = element[4];
        font.style.lineSpacing = element[5];
-       font.style.underline = element[6];
-       font.style.strikethrough = element[7];
-       font.style.textTransform = element[8];
-       font.style.textScript = element[9];
+       element[6] === "0" ?  font.style.underline = false : font.style.underline = element[6];
+       element[7] === "0" ?  font.style.strikethrough = false : font.style.strikethrough = element[7];
+       element[8] === "0" ?  font.style.textTransform = "none" : font.style.textTransform = element[8];
+       element[9] === "0" ?  font.style.textScript = "none" : font.style.textScript = element[9];
        font.name = element[10];
 
        //push into typo
@@ -77,30 +78,19 @@ export default {
   }
 
     this.obj = this.typo
+
+    //Save data into store  
+    this.saveData(this.typo, this.color)
 },
-  computed: {
-    color () {
-      return this.$store.state.typoInput.colors
-    },
-    typo () {
-      return this.$store.state.typoInput.fonts
-    }
-  },
+
   methods: {
     saveData(typo, color) {
-        // typo.replace(/ /g,'')
-        // color.replace(/ /g,'')
 
-        // console.log(JSON.parse(typo));
-        // JSON.parse(typo).forEach(element => {
-        //   this.$store.commit('typoInput/addTypo', element)
-        // });
-        // JSON.parse(color).forEach(element => {
-        //   this.$store.commit('typoInput/addColors', element)
-        // });
 
         this.$store.commit('typoInput/addTypo', typo)
         this.$store.commit('typoInput/addColors', color)
+
+        // redirect to converter
         this.$router.push('converter')
         }
     },
