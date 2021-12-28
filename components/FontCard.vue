@@ -1,12 +1,6 @@
 <template>
   <div>
-    <input
-      type="text"
-      name="classname"
-      id="classname"
-      :value="name"
-      class="w-full bg-transparent"
-    />
+  <slot></slot>
     <draggable
       group="fonts"
       :list="group"
@@ -26,10 +20,11 @@ export default {
       type: Array,
       required: true,
     },
-    name: {
-      type: String,
-      required: false,
-    },
   },
 };
 </script>
+<style scoped>
+input {
+  @apply w-full bg-transparent
+}
+</style>
