@@ -4,7 +4,7 @@
 
      <button
       class="bg-white py-6 rounded px-10 text-black"
-      @click="router.push('/interface')"
+      @click="$router.push('/interface')"
     >
       Weiter
     </button>
@@ -93,11 +93,12 @@ export default {
         .join("-");
     },
     genColors(colrs) {
+      //Function to generate tailwind colors for the tailwind config file. This obect is then used to generate the classes for the typo css
       let ColorObject = [];
       if (this.generatroConfig.genColors) {
         colrs.forEach((color) => {
           let colorName = this.camelize(color.name);
-          let colorvalue = "#" + color.color.value.toString(16);
+          let colorvalue = color.color.value
           let obj = { [colorName]: colorvalue };
           ColorObject.push(obj);
         });
@@ -171,9 +172,10 @@ export default {
       }
     },
     colorClass(value, TailwindColors){
- // Convert Color Number to hex
+      console.log('TailwindColors',TailwindColors)
       try {
-          let color = '#' + value.value.toString(16)
+          let color = value.value
+          console.log('color', color);
           let tColor = convertColor(
             color,
             this.generatroConfig.settings,
@@ -183,7 +185,7 @@ export default {
       } catch (error) {
         console.error('error converting color, Value Provided is curupt', error);
       }
-    }
+    },
   },
   ...mapMutations({
       typoOutput: 'typoOutput'

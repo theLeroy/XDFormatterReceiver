@@ -5,6 +5,7 @@ export const convertColor = (color, settings, TailwindColors = []) => {
         return color;
     }
     try {
+
         let TColorsConverted = {}
         // Convert Tailwind data do plugin useble format
         for (let index = 0; index < TailwindColors.length; index++) {
@@ -41,7 +42,7 @@ export const convertColor = (color, settings, TailwindColors = []) => {
 };
 
 const switchToHex = (color) => {
-    return color.substring(0, color.length - 2)
+    return color.length == 8 ? color.substring(0, color.length - 2) : color
 }
 
 // Only checks names and Hexes - Need to improve

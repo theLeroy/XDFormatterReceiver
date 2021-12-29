@@ -13,22 +13,7 @@ export default {
       color: [],
       typo: [],
       obj: {},
-      sampleColor: { name: "", color: { value: 0 } },
-      sampleFont: {
-          style: {
-            fontFamily: "",
-            fontStyle: "",
-            fontSize: 0,
-            fill: { value: 0 },
-            charSpacing: 0,
-            lineSpacing: 0,
-            underline: 0,
-            strikethrough: 0,
-            textTransform: "",
-            textScript: "",
-          },
-          name: "",
-        },
+      
     };
   },
   created () {
@@ -39,9 +24,9 @@ export default {
     //Load in color Data
      let cdata = this.$route.query.c.split(',')
      for (let index = 0; index < cdata.length; index+=2) {
-      let b = this.sampleColor
+      let b = { name: "", color: { value: 0 } }
        b.name = cdata[index];
-       b.color.value = parseInt(cdata[index+1]);
+       b.color.value = cdata[index+1];
        
        //push into color
        this.color.push(b)
@@ -56,7 +41,7 @@ export default {
      let element = e.split(',')
     
   
-    //Loop all font Properties
+    //Loop all font Properties and map to required format
        let font = {style: {fontFamily: "",fontStyle: "",fontSize: 0,fill: { value: 0 },charSpacing: 0,lineSpacing: 0,underline: 0,strikethrough: 0,textTransform: "",textScript: "",},name: ""};
        font.style.fontFamily = element[0];
        font.style.fontStyle = element[1];
@@ -85,6 +70,7 @@ export default {
 
 
         this.$store.commit('typoInput/addTypo', typo)
+
         this.$store.commit('typoInput/addColors', color)
         // redirect to converter
         this.$router.push('converter')
