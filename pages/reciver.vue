@@ -41,7 +41,7 @@ export default {
      for (let index = 0; index < cdata.length; index+=2) {
       let b = this.sampleColor
        b.name = cdata[index];
-       b.color.value = cdata[index+1];
+       b.color.value = parseInt(cdata[index+1]);
        
        //push into color
        this.color.push(b)
@@ -54,11 +54,8 @@ export default {
     var key = Object.keys(this.$route.query)[i];
     let e = this.$route.query[key];
      let element = e.split(',')
-
-
     
-    
-
+  
     //Loop all font Properties
        let font = {style: {fontFamily: "",fontStyle: "",fontSize: 0,fill: { value: 0 },charSpacing: 0,lineSpacing: 0,underline: 0,strikethrough: 0,textTransform: "",textScript: "",},name: ""};
        font.style.fontFamily = element[0];
@@ -89,7 +86,6 @@ export default {
 
         this.$store.commit('typoInput/addTypo', typo)
         this.$store.commit('typoInput/addColors', color)
-
         // redirect to converter
         this.$router.push('converter')
         }

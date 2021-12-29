@@ -1,14 +1,14 @@
 export const state = () => ({
-    fonts: [],
-    colors: []
+    fonts: '',
+    colors: ''
 })
 
 export const mutations = {
-    addTypo(state, fontObj) {
-        state.fonts = fontObj
+    addTypo(state, font) {
+        state.fonts = font
     },
-    addColors(state, ColorsObj) {
-        state.colors = ColorsObj
+    addColors(state, colors) {
+        state.colors = colors
     },
 }
 
@@ -17,7 +17,7 @@ export const getters = {
         return state.fonts
     },
     getColors: (state) => {
-        return state.colors.colors
+        return state.colors
     }
 
 }

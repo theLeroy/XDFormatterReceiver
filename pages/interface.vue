@@ -1,5 +1,4 @@
 <template>
-  <!-- https://bitbucket.org/TheDiligentDev/vue-kanban-board/src/master/ -->
   <div class="flex h-screen w-screen text-white">
     <div class="w-2/12 h-full p-4 bg-[#2a2a2a] flex flex-col">
       <div class="mb-10 font-medium tracking-wider">Not Assigned</div>
@@ -89,13 +88,7 @@ export default {
     // let color = this.$store.getters['typoOutput/getColors']
   },
   methods: {
-    //add new tasks method
-    // add: function () {
-    //   if (this.newTask) {
-    //     this.arrBackLog.push({ name: this.newTask });
-    //     this.newTask = "";
-    //   }
-    // },
+ 
     runExport() {
       let resultSass = '';
 
@@ -115,13 +108,23 @@ export default {
             }`;
 
             // Add all classes together to one string
-            resultSass += css+'\n';
+            resultSass += css+'\n'; 
         }
       });
 
+      //Gen colors
+      let resultTailwindConfig = `theme: { \n extend: {\n colors: {\n `;
+      let colors = this.$store.getters["typoOutput/getColors"];
+      // Loop all colors and add them to tailwind config
+      colors.forEach((color) => {
+        resultTailwindConfig += `'${Object.keys(color)[0]}': '${Object.values(color)[0]}',\n`;
+      });
+      // add closing brackets
+      resultTailwindConfig += `} \n } \n }`;
+
           
       this.$store.commit("cssOutput/addTypo", resultSass);
-      // this.$store.commit("cssOutput/addColors", resultTailwindConfig);
+      this.$store.commit("cssOutput/addColors", resultTailwindConfig);
 
       //Got to css page
       this.$router.push("/css");
