@@ -32,7 +32,6 @@ export const convertColor = (color, settings, TailwindColors = []) => {
         } else {
             // if not in tailwind system
             return [false, color];
-            // console.log('fontSize could not be Converted');
         }
 
     } catch (e) {

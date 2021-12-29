@@ -25,7 +25,13 @@ export default {
      let cdata = this.$route.query.c.split(',')
      for (let index = 0; index < cdata.length; index+=2) {
       let b = { name: "", color: { value: 0 } }
-       b.name = cdata[index];
+
+      // If color name is index then set name
+      if (cdata[index] == index) {
+          b.name = 'UnnamedColor'+index
+        } else {
+          b.name = cdata[index]
+      }
        b.color.value = cdata[index+1];
        
        //push into color

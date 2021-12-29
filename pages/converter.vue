@@ -143,7 +143,7 @@ export default {
           );
           return fSize[0] ? `${prefix}${fSize[1]}` : `${prefix}leading-[${fSize[1]}]`;
         case "fill":
-          return this.colorClass(value, TailwindColors)
+          return this.colorClass(value, TailwindColors, prefix)
           break;
         case "charSpacing":
           let lSpacing = convertCharSpacing( value,
@@ -171,8 +171,7 @@ export default {
           return false;
       }
     },
-    colorClass(value, TailwindColors){
-      console.log('TailwindColors',TailwindColors)
+    colorClass(value, TailwindColors, prefix){
       try {
           let color = value.value
           console.log('color', color);
