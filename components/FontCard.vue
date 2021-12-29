@@ -25,6 +25,6 @@ export default {
 </script>
 <style scoped>
 input {
-  @apply w-full bg-transparent
+  @apply w-full bg-transparent;
 }
 </style>

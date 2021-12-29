@@ -12,12 +12,11 @@
     <div class="h-full w-10/12 bg-[#212121] p-4">
       <div class="mb-10 font-medium tracking-wider">Fonts</div>
       <div class="grid grid-rows-3 grid-cols-5 grid-flow-row-dense gap-4">
-        <FontCard :group="group1"><input v-model="group1Name" /></FontCard>
-        <FontCard :group="group2"><input v-model="group2Name" /></FontCard>
-        <FontCard :group="group3"><input v-model="group3Name" /></FontCard>
-        <FontCard :group="group4"><input v-model="group4Name" /></FontCard>
-        <FontCard :group="group5"><input v-model="group5Name" /></FontCard>
-        <FontCard :group="group6"><input v-model="group6Name" /></FontCard>
+        <div v-for="(group, index) in groups" :key="index">
+          <FontCard :group="group.fonts"
+            ><input v-model="group.name"
+          /></FontCard>
+        </div>
       </div>
     </div>
   </div>
@@ -26,6 +25,8 @@
 <script>
 import draggable from "vuedraggable";
 
+import { mapMutations } from "vuex";
+
 export default {
   components: {
     //import draggable as a component
@@ -33,31 +34,54 @@ export default {
   },
   data() {
     return {
-      group1Name: ".typo-100",
-      group2Name: ".typo-200",
-      group3Name: ".typo-300",
-      group4Name: ".typo-400",
-      group5Name: ".typo-500",
-      group6Name: ".typo-600",
       NotAssigned: [],
-      group1: [],
-      group2: [],
-      group3: [],
-      group4: [],
-      group5: [],
-      group6: [],
+      groups: [
+        {
+          name: ".typo-100",
+          fonts: [],
+        },
+        {
+          name: ".typo-200",
+          fonts: [],
+        },
+        {
+          name: ".typo-300",
+          fonts: [],
+        },
+        {
+          name: ".typo-400",
+          fonts: [],
+        },
+        {
+          name: ".typo-500",
+          fonts: [],
+        },
+        {
+          name: ".typo-600",
+          fonts: [],
+        },
+        {
+          name: ".typo-700",
+          fonts: [],
+        },
+        {
+          name: ".typo-800",
+          fonts: [],
+        },
+        {
+          name: ".typo-900",
+          fonts: [],
+        },
+      ],
     };
   },
   mounted() {
-    let font = {
-      prefix: null,
-      classes: [],
-    };
+    
     let typoOutput = this.$store.getters["typoOutput/getTypo"];
 
     for (let index = 0; index < typoOutput.length; index++) {
       this.NotAssigned.push({
-        prefix: null,
+        prefix: '',
         classes: typoOutput[index],
       });
     }
@@ -66,18 +90,45 @@ export default {
   },
   methods: {
     //add new tasks method
-    add: function () {
-      if (this.newTask) {
-        this.arrBackLog.push({ name: this.newTask });
-        this.newTask = "";
-      }
-    },
+    // add: function () {
+    //   if (this.newTask) {
+    //     this.arrBackLog.push({ name: this.newTask });
+    //     this.newTask = "";
+    //   }
+    // },
     runExport() {
-      console.log("Export");
-    },
-    onNameChage(value) {
-      console.log(value);
+      let resultSass = '';
+
+      //Gen sass
+      this.groups.forEach((element) => {
+        //Test if font not empty
+        if (element.fonts.length > 0) {
+          // build class string
+          let classesString = '';
+            element.fonts.forEach(font => {
+              classesString += `@apply ${font.prefix}` + font.classes.join(` ${font.prefix}`) + ';\n';
+          });
+          // Add class name
+          let css = 
+            `${element.name} {
+              ${classesString}
+            }`;
+
+            // Add all classes together to one string
+            resultSass += css+'\n';
+        }
+      });
+
+          
+      this.$store.commit("cssOutput/addTypo", resultSass);
+      // this.$store.commit("cssOutput/addColors", resultTailwindConfig);
+
+      //Got to css page
+      this.$router.push("/css");
     },
   },
+  ...mapMutations({
+    cssOutput: "cssOutput",
+  }),
 };
 </script>
