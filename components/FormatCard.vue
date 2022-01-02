@@ -1,19 +1,19 @@
 <template>
   <div class="w-full bg-[#212121] h-auto my-2 p-2 rounded mx-1 text-white">
-    <div class="grid row-2">
+    <div class="">
       <div class="flex justify-between">
         <label id="prefix">Prefix: {{font.prefix}}</label>
         <input
           id="prefix"
           v-model="font.prefix"
           type="text"
-          class="bg-none bg-opacity-0 rounded px-2 py-1"
+          class="bg-none bg-opacity-0 rounded px-2 py-1 w-20"
         />
       </div>
       <div class="mt-2">
         
         <div>Classes:</div>
-        <span v-for="(item, index) in font.classes" :key="index">
+        <span v-for="(item, index) in font.classes" :key="index" class="break-normal">
          {{font.prefix + item }}
         </span>
       </div>

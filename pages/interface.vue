@@ -8,7 +8,7 @@
       </button>
     </div>
 
-    <div class="h-full w-10/12 bg-[#212121] p-4 overflow-x-scroll">
+    <div class="h-full w-10/12 bg-[#212121] p-4 overflow-y-auto overflow-x-hidden">
       <div class="mb-10 font-medium tracking-wider">Fonts</div>
       <div class="grid grid-rows-3 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 grid-flow-row-dense gap-4">
         <div v-for="(group, index) in groups" :key="index">

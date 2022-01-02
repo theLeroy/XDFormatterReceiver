@@ -1,5 +1,5 @@
 <template>
-<div class="  shadow-md h-full">
+<div class="overflow-y-auto overflow-x-hidden shadow-md h-full no-scrollbar">
   <draggable group="fonts" :list="group" class="">
     <FormatCard
       class="list-group-item"
@@ -21,3 +21,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+</style>
