@@ -149,7 +149,7 @@ export default {
           let lSpacing = convertCharSpacing( value,
             this.generatroConfig.settings.remConversion
             );
-             return lSpacing[0] ? `${prefix}${lSpacing[1]}` : `${prefix}tracking-[${lSpacing[1]}rem]`;
+             return lSpacing[0] ? `${prefix}${lSpacing[1]}` : `${prefix}tracking-[${lSpacing[1]}em]`;
           break;
         case "lineSpacing":
             let lHeight = convertLineHeight( value,

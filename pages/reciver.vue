@@ -22,7 +22,12 @@ export default {
 
 
     //Load in color Data
-     let cdata = this.$route.query.c.split(',')
+
+    //Test if color data is definde
+    let cdata = []
+    if ( this.$route.query.c ) {
+       cdata = this.$route.query.c.split(',')
+      } 
      for (let index = 0; index < cdata.length; index+=2) {
       let b = { name: "", color: { value: 0 } }
 
