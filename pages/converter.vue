@@ -109,11 +109,11 @@ export default {
       // return fonts;
       let TypoObject = [];
       for (let index = 0; index < fonts.length; index++) {
-        TypoObject.push( this.genCss(fonts[index].style, TailwindConfig));
+        TypoObject.push( this.genCss(fonts[index].style, fonts[index].name, TailwindConfig));
       }
       return TypoObject
     },
-    genCss(style, TailwindConfig = [], prefix = "") {
+    genCss(style, name, TailwindConfig = [], prefix = "") {
       let tailwindClasses = [];
       //Loop through all the styles properties from xd Plugin
       for (var property in style) {
@@ -126,7 +126,7 @@ export default {
           console.log("Not Tailwind compatible; ", property, style[property]);
         }
       }
-      return tailwindClasses;
+      return {name: `${name}`, classes: tailwindClasses};
     },
     classBuilder(key, value, TailwindColors = [], prefix = "") {
 

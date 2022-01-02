@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen bg-[#2a2a2a] w-screen text-white p-4">
+  <div class="flex flex-col min-h-screen bg-[#2a2a2a] w-screen text-white p-4">
     <div>
       <pre>
         <code v-highlight class="javascript">{{ tailwindConfig }}</code>

@@ -81,7 +81,8 @@ export default {
     for (let index = 0; index < typoOutput.length; index++) {
       this.NotAssigned.push({
         prefix: '',
-        classes: typoOutput[index],
+        classes: typoOutput[index].classes,
+        name: typoOutput[index].name
       });
     }
 
