@@ -19,6 +19,8 @@ The Plugin exprts your global Colors and Caracter styles to an self-written conv
 - Host on public Web Server
 - Beautify interface
 - publish the extension
+- Add a copy option
+
 
 
 ## Build Setup
@@ -45,3 +47,7 @@ Here is an abstract scheme of how the web converter works. It also describes how
 
 <p align="center"><img align="center" src="./.github/flowExplanation.png"/></p><br/>
 
+
+## Mor Links
+[Demo File](https://github.com/theLeroy/XDFormatterReceiver/blob/main/.github/Demo.xd)
+[Documentation graphic](https://github.com/theLeroy/XDFormatterReceiver/blob/main/.github/Documentation%20and%20Logo.xd)
