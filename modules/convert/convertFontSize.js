@@ -2,13 +2,13 @@
 import { convertUnit } from './unit-convert';
 
 export const convertFontSize = (fontSize, settings) => {
+    //Convert adobe xd virtual pixels to tailwind rem.
     let processedValue = convertUnit(fontSizeArray, fontSize, settings);
     if (
         tailwindcssFontSize[processedValue]
     ) {
-        //If in tailwind system
-
-        return [true, `${tailwindcssFontSize[processedValue].substring(1)}`]
+        // if in tailwind system
+        return [true, `${tailwindcssFontSize[processedValue].substring(1)}`] //remove the '.'
     } else {
         // if not in tailwind system
         return [false, processedValue];
