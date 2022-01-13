@@ -79,7 +79,6 @@ export default {
   methods: {
     saveData(typo, color) {
 
-
         this.$store.commit('typoInput/addTypo', typo)
 
         this.$store.commit('typoInput/addColors', color)
